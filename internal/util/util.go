@@ -1,9 +1,4 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// This source code is licensed under the MIT license found in the
-// LICENSE file in the root directory of this source tree.
-
-package helpers
+package util
 
 import (
 	"encoding/json"
@@ -20,7 +15,7 @@ func PrintAndLog(message string) {
 	fmt.Println(message)
 }
 
-func contains(array []string, element string) bool {
+func Contains(array []string, element string) bool {
 	for _, e := range array {
 		if e == element {
 			return true

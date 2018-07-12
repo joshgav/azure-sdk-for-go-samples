@@ -10,17 +10,19 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/Azure-Samples/azure-sdk-for-go-samples/helpers"
-	"github.com/Azure-Samples/azure-sdk-for-go-samples/iam"
 	"github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2017-05-10/resources"
 	"github.com/Azure/go-autorest/autorest"
+
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/iam"
+	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 func getResourcesClient() resources.Client {
-	resourcesClient := resources.NewClient(helpers.SubscriptionID())
-	auth, _ := iam.GetResourceManagementAuthorizer(iam.AuthGrantType())
-	resourcesClient.Authorizer = auth
-	resourcesClient.AddToUserAgent(helpers.UserAgent())
+	resourcesClient := resources.NewClient(config.SubscriptionID())
+	a, _ := iam.GetResourceManagementAuthorizer()
+	resourcesClient.Authorizer = a
+	resourcesClient.AddToUserAgent(internalutil.UserAgent())
 	return resourcesClient
 }
 
@@ -54,7 +56,7 @@ func GetResource(ctx context.Context, resourceProvider, resourceType, resourceNa
 
 	return resourcesClient.Get(
 		ctx,
-		helpers.ResourceGroupName(),
+		config.GroupName(),
 		resourceProvider,
 		"",
 		resourceType,

@@ -8,6 +8,7 @@ package network
 import (
 	"context"
 	"flag"
+	"log"
 	"os"
 	"testing"
 	"time"
@@ -26,6 +27,15 @@ var (
 	nicName            = "nic1"
 	ipName             = "ip1"
 )
+
+func TestMain(m *testing.M) {
+	err := setupEnvironment()
+	if err != nil {
+		log.Fatalf("could not set up environment: %v\n", err)
+	}
+
+	os.Exit(m.Run())
+}
 
 func setupEnvironment() error {
 	err1 := config.ParseEnvironment()
@@ -52,18 +62,13 @@ func addLocalConfig() error {
 }
 
 func TestNetwork(t *testing.T) {
-	err := setupEnvironment()
-	if err != nil {
-		t.Fatalf("could not set up environment: %v\n", err)
-	}
-
 	groupName := config.GenerateGroupName("network-test")
 	config.SetGroupName(groupName) // TODO: don't use globals
 	ctx, cancel := context.WithTimeout(context.Background(), 300*time.Second)
 	defer cancel()
 	defer resources.Cleanup(ctx)
 
-	_, err = resources.CreateGroup(ctx, groupName)
+	_, err := resources.CreateGroup(ctx, groupName)
 	if err != nil {
 		t.Fatalf("failed to create group: %v\n", err.Error())
 	}

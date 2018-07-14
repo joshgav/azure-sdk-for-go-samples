@@ -7,7 +7,6 @@ package iam
 
 import (
 	"fmt"
-	"log"
 	"net/url"
 	"strings"
 

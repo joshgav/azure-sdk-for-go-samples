@@ -15,7 +15,6 @@ import (
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/iam"
-	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 const (
@@ -33,7 +32,7 @@ func getGroupsClient(activeDirectoryEndpoint, tokenAudience string) resources.Gr
 		config.Environment().ResourceManagerEndpoint,
 		config.SubscriptionID())
 	groupsClient.Authorizer = autorest.NewBearerAuthorizer(token)
-	groupsClient.AddToUserAgent(util.UserAgent())
+	groupsClient.AddToUserAgent(config.UserAgent())
 	return groupsClient
 }
 

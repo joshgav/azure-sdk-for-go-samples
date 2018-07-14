@@ -4,6 +4,7 @@
 package config
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/Azure/go-autorest/autorest/azure"
@@ -11,6 +12,10 @@ import (
 )
 
 var (
+	// these are our *global* config settings, to be shared by all packages.
+	// each has corresponding public accessors below.
+	// if anything requires a `Set` accessor, that indicates it perhaps
+	// shouldn't be set here, because mutable vars shouldn't be global.
 	clientID               string
 	clientSecret           string
 	tenantID               string
@@ -18,36 +23,39 @@ var (
 	location               string
 	resourceURL            string
 	authorizationServerURL string
-	cloudName              string
+	cloudName              string = "AzurePublicCloud"
 	useDeviceFlow          bool
 	keepResources          bool
-	groupName              string
+	groupName              string // deprecated, use baseGroupName instead
 	baseGroupName          string
+	userAgent              string
 )
 
-// ClientID is the OAuth client ID
+// ClientID is the OAuth client ID.
 func ClientID() string {
 	return clientID
 }
 
-// ClientSecret is the OAuth client secret
+// ClientSecret is the OAuth client secret.
 func ClientSecret() string {
 	return clientSecret
 }
 
-// TenantID is the AAD tenant to which this client belongs
+// TenantID is the AAD tenant to which this client belongs.
 func TenantID() string {
 	return tenantID
 }
 
-// SubscriptionID is a target subscription for resource management
-func SubscriptionID() string {
-	return subscriptionID
-}
-
-// ResourceURL is the URL of a resource for use with OAuth requests
+// TODO: shouldn't be global. deprecate and manage within packages.
+// ResourceURL is the URL of a resource for which access is to be requested via
+// OAuth.
 func ResourceURL() string {
 	return resourceURL
+}
+
+// SubscriptionID is a target subscription for Azure resources.
+func SubscriptionID() string {
+	return subscriptionID
 }
 
 // deprecated: use DefaultLocation() instead
@@ -64,11 +72,13 @@ func DefaultLocation() string {
 }
 
 // AuthorizationServerURL is the OAuth authorization server URL.
+// Q: Can this be gotten from the `azure.Environment` in `Environment()`?
 func AuthorizationServerURL() string {
 	return authorizationServerURL
 }
 
-// UseDeviceFlow() specifies if interactive auth should be used.
+// UseDeviceFlow() specifies if interactive auth should be used. Interactive
+// auth uses the OAuth Device Flow grant type.
 func UseDeviceFlow() bool {
 	return useDeviceFlow
 }
@@ -90,16 +100,35 @@ func BaseGroupName() string {
 	return baseGroupName
 }
 
+// KeepResources() specifies whether to keep resources created by samples.
 func KeepResources() bool {
 	return keepResources
 }
 
-func Environment() azure.Environment {
+// UserAgent() specifies a string to append to the agent identifier.
+func UserAgent() string {
+	if len(userAgent) > 0 {
+		return userAgent
+	}
+	return "sdk-samples"
+}
+
+// cache
+var environment *azure.Environment
+
+// Environment() returns an `azure.Environment{...}` for the current cloud.
+func Environment() *azure.Environment {
+	if environment != nil {
+		return environment
+	}
 	env, err := azure.EnvironmentFromName(cloudName)
 	if err != nil {
-		return azure.PublicCloud
+		// TODO: move to initialization of var
+		panic(fmt.Sprintf(
+			"invalid cloud name '%s' specified, cannot continue\n", cloudName))
 	}
-	return env
+	environment = &env
+	return environment
 }
 
 // GenerateGroupName leverages BaseGroupName() to return a more detailed name,

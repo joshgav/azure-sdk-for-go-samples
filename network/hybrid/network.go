@@ -17,7 +17,6 @@ import (
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/iam"
-	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 const (
@@ -31,7 +30,7 @@ func getVnetClient(activeDirectoryEndpoint, tokenAudience string) network.Virtua
 	}
 	vnetClient := network.NewVirtualNetworksClientWithBaseURI(config.Environment().ResourceManagerEndpoint, config.SubscriptionID())
 	vnetClient.Authorizer = autorest.NewBearerAuthorizer(token)
-	vnetClient.AddToUserAgent(util.UserAgent())
+	vnetClient.AddToUserAgent(config.UserAgent())
 	return vnetClient
 }
 
@@ -42,7 +41,7 @@ func getNsgClient(activeDirectoryEndpoint, tokenAudience string) network.Securit
 	}
 	nsgClient := network.NewSecurityGroupsClientWithBaseURI(config.Environment().ResourceManagerEndpoint, config.SubscriptionID())
 	nsgClient.Authorizer = autorest.NewBearerAuthorizer(token)
-	nsgClient.AddToUserAgent(util.UserAgent())
+	nsgClient.AddToUserAgent(config.UserAgent())
 	return nsgClient
 }
 
@@ -53,7 +52,7 @@ func getIPClient(activeDirectoryEndpoint, tokenAudience string) network.PublicIP
 	}
 	ipClient := network.NewPublicIPAddressesClientWithBaseURI(config.Environment().ResourceManagerEndpoint, config.SubscriptionID())
 	ipClient.Authorizer = autorest.NewBearerAuthorizer(token)
-	ipClient.AddToUserAgent(util.UserAgent())
+	ipClient.AddToUserAgent(config.UserAgent())
 	return ipClient
 }
 
@@ -64,7 +63,7 @@ func getNicClient(activeDirectoryEndpoint, tokenAudience string) network.Interfa
 	}
 	nicClient := network.NewInterfacesClientWithBaseURI(config.Environment().ResourceManagerEndpoint, config.SubscriptionID())
 	nicClient.Authorizer = autorest.NewBearerAuthorizer(token)
-	nicClient.AddToUserAgent(util.UserAgent())
+	nicClient.AddToUserAgent(config.UserAgent())
 	return nicClient
 }
 
@@ -75,7 +74,7 @@ func getSubnetsClient(activeDirectoryEndpoint, tokenAudience string) network.Sub
 	}
 	subnetsClient := network.NewSubnetsClientWithBaseURI(config.Environment().ResourceManagerEndpoint, config.SubscriptionID())
 	subnetsClient.Authorizer = autorest.NewBearerAuthorizer(token)
-	subnetsClient.AddToUserAgent(util.UserAgent())
+	subnetsClient.AddToUserAgent(config.UserAgent())
 	return subnetsClient
 }
 

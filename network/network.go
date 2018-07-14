@@ -15,7 +15,6 @@ import (
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/iam"
-	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 // Vnets
@@ -24,7 +23,7 @@ func getVnetClient() network.VirtualNetworksClient {
 	vnetClient := network.NewVirtualNetworksClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	vnetClient.Authorizer = a
-	vnetClient.AddToUserAgent(util.UserAgent())
+	vnetClient.AddToUserAgent(config.UserAgent())
 	return vnetClient
 }
 
@@ -110,7 +109,7 @@ func getSubnetsClient() network.SubnetsClient {
 	subnetsClient := network.NewSubnetsClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	subnetsClient.Authorizer = a
-	subnetsClient.AddToUserAgent(util.UserAgent())
+	subnetsClient.AddToUserAgent(config.UserAgent())
 	return subnetsClient
 }
 
@@ -186,7 +185,7 @@ func getNsgClient() network.SecurityGroupsClient {
 	nsgClient := network.NewSecurityGroupsClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	nsgClient.Authorizer = a
-	nsgClient.AddToUserAgent(util.UserAgent())
+	nsgClient.AddToUserAgent(config.UserAgent())
 	return nsgClient
 }
 
@@ -294,7 +293,7 @@ func getNicClient() network.InterfacesClient {
 	nicClient := network.NewInterfacesClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	nicClient.Authorizer = a
-	nicClient.AddToUserAgent(util.UserAgent())
+	nicClient.AddToUserAgent(config.UserAgent())
 	return nicClient
 }
 
@@ -420,7 +419,7 @@ func getIPClient() network.PublicIPAddressesClient {
 	ipClient := network.NewPublicIPAddressesClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	ipClient.Authorizer = a
-	ipClient.AddToUserAgent(util.UserAgent())
+	ipClient.AddToUserAgent(config.UserAgent())
 	return ipClient
 }
 
@@ -469,7 +468,7 @@ func getSecurityRulesClient() network.SecurityRulesClient {
 	rulesClient := network.NewSecurityRulesClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	rulesClient.Authorizer = a
-	rulesClient.AddToUserAgent(util.UserAgent())
+	rulesClient.AddToUserAgent(config.UserAgent())
 	return rulesClient
 }
 
@@ -607,7 +606,7 @@ func getLBClient() network.LoadBalancersClient {
 	lbClient := network.NewLoadBalancersClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	lbClient.Authorizer = a
-	lbClient.AddToUserAgent(util.UserAgent())
+	lbClient.AddToUserAgent(config.UserAgent())
 	return lbClient
 }
 

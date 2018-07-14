@@ -12,14 +12,13 @@ import (
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/iam"
-	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 func getProviderClient() resources.ProvidersClient {
 	providerClient := resources.NewProvidersClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	providerClient.Authorizer = a
-	providerClient.AddToUserAgent(util.UserAgent())
+	providerClient.AddToUserAgent(config.UserAgent())
 	return providerClient
 }
 

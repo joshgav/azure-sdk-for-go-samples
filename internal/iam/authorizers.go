@@ -6,6 +6,7 @@
 package iam
 
 import (
+	"fmt"
 	"log"
 	"net/url"
 	"strings"
@@ -148,7 +149,7 @@ func GetKeyvaultAuthorizer() (autorest.Authorizer, error) {
 		deviceConfig.AADEndpoint = alternateEndpoint.String()
 		a, err = deviceConfig.Authorizer()
 	default:
-		log.Fatalln("invalid token type specified")
+		return a, fmt.Errorf("invalid grant type specified: %s\n", grantType)
 	}
 
 	if err == nil {
@@ -190,7 +191,7 @@ func getAuthorizerForResource(grantType OAuthGrantType, resource string) (autore
 		}
 
 	default:
-		log.Fatalln("invalid grant type specified")
+		return a, fmt.Errorf("invalid grant type specified: %s\n", grantType)
 	}
 
 	return a, err

@@ -17,7 +17,7 @@ import (
 	hybridresources "github.com/Azure-Samples/azure-sdk-for-go-samples/resources/hybrid"
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
-	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 var (
@@ -71,7 +71,7 @@ func TestNetwork(t *testing.T) {
 	}
 	_, err = CreateVirtualNetworkAndSubnets(context.Background(), virtualNetworkName, subnetName)
 	if err != nil {
-		t.Fatalf("could not create vnet: %v\n", err.Error)
+		t.Fatalf("could not create vnet: %v\n", err.Error())
 	}
 	t.Logf("created vnet")
 }
@@ -85,7 +85,7 @@ func ExampleCreateNetworkSecurityGroup() {
 
 	_, err := hybridresources.CreateGroup(ctx)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
 	_, err = CreateNetworkSecurityGroup(ctx, nsgName)
 	if err != nil {
@@ -106,7 +106,7 @@ func ExampleCreatePublicIP() {
 
 	_, err := hybridresources.CreateGroup(ctx)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
 	_, err = CreatePublicIP(ctx, ipName)
 	if err != nil {
@@ -127,7 +127,7 @@ func ExampleCreateNetworkInterface() {
 
 	_, err := hybridresources.CreateGroup(ctx)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
 
 	_, err = CreateNetworkInterface(ctx, networkInterfaceName, nsgName, virtualNetworkName, subnetName, ipName)

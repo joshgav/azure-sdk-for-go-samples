@@ -4,7 +4,7 @@ import (
 	"log"
 	"strings"
 
-	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 var allLocations = []string{
@@ -50,7 +50,7 @@ func OverrideCanaryLocation(usableLocation string) {
 // This can be used when the selection location does not have the desired resource provider available yet
 func OverrideLocation(available []string) {
 	// If location is not listed on all locations, don't override it. It might be a canary location
-	if internalutil.Contains(allLocations, location) && !internalutil.Contains(available, location) && len(available) > 0 {
+	if util.Contains(allLocations, location) && !util.Contains(available, location) && len(available) > 0 {
 		log.Printf(locationOverrideTemplate, available[0], location)
 		location = available[0]
 	}

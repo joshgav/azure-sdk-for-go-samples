@@ -19,7 +19,7 @@ import (
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/iam"
-	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 func getGroupsClient() resources.GroupsClient {
@@ -29,7 +29,7 @@ func getGroupsClient() resources.GroupsClient {
 		log.Fatalf("failed to initialize authorizer: %v\n", err)
 	}
 	groupsClient.Authorizer = a
-	groupsClient.AddToUserAgent(internalutil.UserAgent())
+	groupsClient.AddToUserAgent(util.UserAgent())
 	return groupsClient
 }
 
@@ -37,7 +37,7 @@ func getGroupsClientFromAuthFile() resources.GroupsClient {
 	groupsClient := resources.NewGroupsClient(config.SubscriptionID())
 	a, _ := auth.NewAuthorizerFromFile(groupsClient.BaseURI)
 	groupsClient.Authorizer = a
-	groupsClient.AddToUserAgent(internalutil.UserAgent())
+	groupsClient.AddToUserAgent(util.UserAgent())
 	return groupsClient
 }
 

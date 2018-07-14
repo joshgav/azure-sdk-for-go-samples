@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
-	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 func setupEnvironment() error {
@@ -48,9 +48,9 @@ func TestGroupsHybrid(t *testing.T) {
 
 	_, err = CreateGroup(ctx)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("resource group created")
+	util.PrintAndLog("resource group created")
 
 	// Output:
 	// resource group created

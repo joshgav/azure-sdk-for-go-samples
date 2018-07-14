@@ -9,7 +9,7 @@ import (
 func AddFlags() error {
 	flag.StringVar(&subscriptionID, "subscription", subscriptionID, "Subscription for tests.")
 	flag.StringVar(&location, "location", location, "Default location for tests.")
-	flag.StringVar(&targetCloud, "cloud", targetCloud, "Target Azure cloud.")
+	flag.StringVar(&cloudName, "cloud", cloudName, "Name of Azure cloud.")
 	flag.StringVar(&baseGroupName, "baseGroupName", BaseGroupName(), "Specify prefix name of resource group for sample resources.")
 
 	flag.BoolVar(&useDeviceFlow, "useDeviceFlow", useDeviceFlow, "Use device-flow grant type rather than client credentials.")

@@ -4,10 +4,9 @@
 package config
 
 import (
-	"fmt"
+	"strings"
 
 	"github.com/Azure/go-autorest/autorest/azure"
-
 	"github.com/marstr/randname"
 )
 
@@ -20,13 +19,10 @@ var (
 	resourceURL            string
 	authorizationServerURL string
 	cloudName              string
-	targetCloud            string
 	useDeviceFlow          bool
-
-	keepResources   bool
-	groupName       string
-	baseGroupName   string
-	groupNamePrefix string
+	keepResources          bool
+	groupName              string
+	baseGroupName          string
 )
 
 // ClientID is the OAuth client ID
@@ -106,11 +102,16 @@ func Environment() azure.Environment {
 	return env
 }
 
-// GenerateGroupName appends a random string to the base group name, and an additional
-// affix if specified. This helps to avoid collisions.
-func GenerateGroupName(affix string) string {
-	if len(affix) > 0 {
-		affix += "-"
+// GenerateGroupName leverages BaseGroupName() to return a more detailed name,
+// helping to avoid collisions.  It appends each of the `affixes` to
+// BaseGroupName() separated by dashes, and adds a 5-character random string.
+func GenerateGroupName(affixes ...string) string {
+	var b strings.Builder
+	b.WriteString(BaseGroupName())
+	b.WriteRune('-')
+	for _, affix := range affixes {
+		b.WriteString(affix)
+		b.WriteRune('-')
 	}
-	return randname.GenerateWithPrefix(fmt.Sprintf("%s-%s", BaseGroupName(), affix), 5)
+	return randname.GenerateWithPrefix(b.String(), 5)
 }

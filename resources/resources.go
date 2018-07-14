@@ -15,14 +15,14 @@ import (
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/iam"
-	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 func getResourcesClient() resources.Client {
 	resourcesClient := resources.NewClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	resourcesClient.Authorizer = a
-	resourcesClient.AddToUserAgent(internalutil.UserAgent())
+	resourcesClient.AddToUserAgent(util.UserAgent())
 	return resourcesClient
 }
 

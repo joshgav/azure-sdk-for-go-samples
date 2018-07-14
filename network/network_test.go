@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
-	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/resources"
 )
@@ -108,32 +108,32 @@ func ExampleCreateNIC() {
 
 	_, err := resources.CreateGroup(ctx, config.GroupName())
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
 
 	_, err = CreateVirtualNetworkAndSubnets(ctx, virtualNetworkName, subnet1Name, subnet2Name)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created vnet and 2 subnets")
+	util.PrintAndLog("created vnet and 2 subnets")
 
 	_, err = CreateNetworkSecurityGroup(ctx, nsgName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created network security group")
+	util.PrintAndLog("created network security group")
 
 	_, err = CreatePublicIP(ctx, ipName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created public IP")
+	util.PrintAndLog("created public IP")
 
 	_, err = CreateNIC(ctx, virtualNetworkName, subnet1Name, nsgName, ipName, nicName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created nic")
+	util.PrintAndLog("created nic")
 
 	// Output:
 	// created vnet and 2 subnets
@@ -151,66 +151,66 @@ func ExampleCreateNetworkSecurityGroup() {
 
 	_, err := resources.CreateGroup(ctx, config.GroupName())
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
 
 	_, err = CreateVirtualNetwork(ctx, virtualNetworkName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created vnet")
+	util.PrintAndLog("created vnet")
 
 	frontNSGName := "frontend"
 	backNSGName := "backend"
 
 	_, err = CreateNetworkSecurityGroup(ctx, frontNSGName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created frontend network security group")
+	util.PrintAndLog("created frontend network security group")
 
 	_, err = CreateNetworkSecurityGroup(ctx, backNSGName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created backend network security group")
+	util.PrintAndLog("created backend network security group")
 
 	frontEndAddressPrefix := "10.0.0.0/16"
 	_, err = CreateSubnetWithNetowrkSecurityGroup(ctx, virtualNetworkName, "frontend", frontEndAddressPrefix, frontNSGName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created subnet with frontend network security group")
+	util.PrintAndLog("created subnet with frontend network security group")
 
 	_, err = CreateSubnetWithNetowrkSecurityGroup(ctx, virtualNetworkName, "backend", "10.1.0.0/16", backNSGName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created subnet with backend network security group")
+	util.PrintAndLog("created subnet with backend network security group")
 
 	_, err = CreateSSHRule(ctx, frontNSGName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created frontend SSH security rule")
+	util.PrintAndLog("created frontend SSH security rule")
 
 	_, err = CreateHTTPRule(ctx, frontNSGName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created frontend HTTP security rule")
+	util.PrintAndLog("created frontend HTTP security rule")
 
 	_, err = CreateSQLRule(ctx, frontNSGName, frontEndAddressPrefix)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created frontend SQL security rule")
+	util.PrintAndLog("created frontend SQL security rule")
 
 	_, err = CreateDenyOutRule(ctx, backNSGName)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created backend deny out security rule")
+	util.PrintAndLog("created backend deny out security rule")
 
 	// Output:
 	// created vnet

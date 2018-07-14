@@ -13,14 +13,14 @@ import (
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/iam"
-	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 func getDeploymentsClient() resources.DeploymentsClient {
 	deployClient := resources.NewDeploymentsClient(config.SubscriptionID())
 	a, _ := iam.GetResourceManagementAuthorizer()
 	deployClient.Authorizer = a
-	deployClient.AddToUserAgent(internalutil.UserAgent())
+	deployClient.AddToUserAgent(util.UserAgent())
 	return deployClient
 }
 

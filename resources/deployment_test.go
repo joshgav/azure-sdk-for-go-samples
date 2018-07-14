@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 
 	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/config"
-	internalutil "github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
+	"github.com/Azure-Samples/azure-sdk-for-go-samples/internal/util"
 )
 
 func ExampleCreateTemplateDeployment() {
@@ -22,7 +22,7 @@ func ExampleCreateTemplateDeployment() {
 
 	_, err := CreateGroup(ctx, config.GroupName())
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
 
 	gopath := build.Default.GOPATH
@@ -31,26 +31,26 @@ func ExampleCreateTemplateDeployment() {
 	parametersFile := filepath.Join(gopath, "src", repo, "resources", "testdata", "parameters.json")
 	deployName := "VMdeploy"
 
-	template, err := internalutil.ReadJSON(templateFile)
+	template, err := util.ReadJSON(templateFile)
 	if err != nil {
 		return
 	}
-	params, err := internalutil.ReadJSON(parametersFile)
+	params, err := util.ReadJSON(parametersFile)
 	if err != nil {
 		return
 	}
 
 	_, err = ValidateDeployment(ctx, deployName, template, params)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("validated VM template deployment")
+	util.PrintAndLog("validated VM template deployment")
 
 	_, err = CreateDeployment(ctx, deployName, template, params)
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("created VM template deployment")
+	util.PrintAndLog("created VM template deployment")
 
 	ipName := (*params)["publicIPAddresses_QuickstartVM_ip_name"].(map[string]interface{})["value"].(string)
 	vmUser := (*params)["vm_user"].(map[string]interface{})["value"].(string)
@@ -62,9 +62,9 @@ func ExampleCreateTemplateDeployment() {
 		ipName,
 		"2018-01-01")
 	if err != nil {
-		internalutil.PrintAndLog(err.Error())
+		util.PrintAndLog(err.Error())
 	}
-	internalutil.PrintAndLog("got public IP info via get generic resource")
+	util.PrintAndLog("got public IP info via get generic resource")
 
 	log.Printf("Log in with ssh: %s@%s, password: %s",
 		vmUser,
